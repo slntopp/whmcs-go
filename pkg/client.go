@@ -18,6 +18,7 @@ type Client struct {
 	client *http.Client
 
 	Support SupportService
+	Tickets TicketsService
 }
 
 func NewClient(api, username, password string, dangerMode bool) (*Client, error) {
@@ -42,6 +43,7 @@ func NewClient(api, username, password string, dangerMode bool) (*Client, error)
 	}
 
 	c.initSupportService()
+	c.initTicketsService()
 
 	return c, nil
 }

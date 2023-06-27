@@ -143,15 +143,7 @@ func (s *SupportService) GetAnnouncements(req *GetAnnouncementsRequest) (*GetAnn
 	}
 
 	raw["announcements"] = raw["announcements"].(map[string]interface{})["announcement"]
-	// for _, v := range raw["announcements"].([]interface{}) {
-	// 	v := v.(map[string]interface{})
-	// 	if v["published"] == 1.0 {
-	// 		v["published"] = true
-	// 	} else {
-	// 		v["published"] = false
-	// 	}
-	// }
-
+	
 	res, err := toStruct[GetAnnouncementsResponse](raw)
 	if err != nil {
 		return nil, err
