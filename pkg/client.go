@@ -17,8 +17,10 @@ type Client struct {
 
 	client *http.Client
 
-	Support SupportService
-	Tickets TicketsService
+	Authentication AuthenticationService
+	Support        SupportService
+	Tickets        TicketsService
+	System         SystemService
 }
 
 func NewClient(api, username, password string, dangerMode bool) (*Client, error) {
@@ -42,8 +44,10 @@ func NewClient(api, username, password string, dangerMode bool) (*Client, error)
 		client:   client,
 	}
 
+	c.initAuthenticationService()
 	c.initSupportService()
 	c.initTicketsService()
+	c.initSystemService()
 
 	return c, nil
 }
@@ -56,19 +60,19 @@ type ApiResponse struct {
 	Message *string `json:"message"`
 }
 
-func toMap(in any) (map[string]interface{}, error) {
+func toMap(in any) (map[string]any, error) {
 	_json, err := json.Marshal(in)
 	if err != nil {
 		return nil, err
 	}
-	out := make(map[string]interface{})
+	out := make(map[string]any)
 	if err := json.Unmarshal(_json, &out); err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func toStruct[T any](in map[string]interface{}) (*T, error) {
+func toStruct[T any](in map[string]any) (*T, error) {
 	_json, err := json.Marshal(in)
 	if err != nil {
 		return nil, err
@@ -88,7 +92,7 @@ func (c *Client) call(action string, apiReq, apiRes any) error {
 	writer.WriteField("action", action)
 	writer.WriteField("responsetype", "json")
 
-	params, ok := apiReq.(map[string]interface{})
+	params, ok := apiReq.(map[string]any)
 	var err error
 	if !ok && apiReq != nil {
 		params, err = toMap(apiReq)

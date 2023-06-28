@@ -52,7 +52,7 @@ type GetTicketRequest struct {
 	// 	Optional
 	TicketNum string `json:"ticketnum"`
 
-	// A specific ticket ID to find tickets for (either $ticketnum or $ticketid is required).
+	// A specific ticket ID to find tickets for (either TicketNum or TicketId is required).
 	// 	Optional
 	TicketId int `json:"ticketid"`
 

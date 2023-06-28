@@ -106,7 +106,7 @@ type AddTicketNoteRequest struct {
 
 	// Optional array of file attachments.
 	// 	Optional
-	Attachments []Attachment `json:"attachments"`
+	Attachments []Attachment `json:"-"`
 
 	// The date and time the ticket note will show as created. Format: ISO8601 or YYYY-MM-DD HH:mm:ss.
 	// Ticket creation date cannot be in the future
@@ -135,7 +135,7 @@ type AddTicketReplyRequest struct {
 	// 	Optional
 	ClientId int `json:"clientid"`
 
-	// Pass a contactid to associate the ticket reply with a specific contact belonging to $clientid
+	// Pass a contactid to associate the ticket reply with a specific contact belonging to ClientId
 	// 	Optional
 	ContactId int `json:"contactid"`
 
@@ -161,11 +161,11 @@ type AddTicketReplyRequest struct {
 
 	// A base64 encoded array of the custom fields to update
 	// 	Optional
-	// CustomFields map[string]interface{} `json:"customfields"`
+	CustomFields map[string]any `json:"-"`
 
-	// Optional base64 json encoded array of file attachments. Can be the direct output of a multipart-form-data form submission ($_FILES superglobal in PHP) or an array of arrays consisting of both a filename and data keys (see example below).
+	// Optional array of file attachments.
 	// 	Optional
-	Attachments []Attachment `json:"attachments"`
+	Attachments []Attachment `json:"-"`
 
 	// The date and time the ticket note will show as created. Format: ISO8601 or YYYY-MM-DD HH:mm:ss.
 	// Ticket creation date cannot be in the future
@@ -370,11 +370,11 @@ type OpenTicketRequest struct {
 
 	// Base64 encoded serialized array of custom field values
 	// 	Optional
-	// customfields string `json:"customfields"`
+	CustomFields map[string]any `json:"-"`
 
 	// Optional array of file attachments.
 	// 	Optional
-	Attachments []Attachment `json:"attachments"`
+	Attachments []Attachment `json:"-"`
 }
 
 type OpenTicketResponse struct {
@@ -449,7 +449,7 @@ type UpdateTicketRequest struct {
 
 	// Base64 encoded serialized array of custom field values
 	// 	Optional
-	// Customfields string `json:"customfields"`
+	CustomFields map[string]any `json:"-"`
 }
 
 type UpdateTicketResponse struct {
