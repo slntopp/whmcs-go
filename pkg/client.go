@@ -29,12 +29,10 @@ func NewClient(api, username, password string, dangerMode bool) (*Client, error)
 	}
 
 	client := &http.Client{}
-	if dangerMode {
-		client.Transport = &http.Transport{
-			TLSClientConfig: &tls.Config{
-				InsecureSkipVerify: true,
-			},
-		}
+	client.Transport = &http.Transport{
+		TLSClientConfig: &tls.Config{
+			InsecureSkipVerify: dangerMode,
+		},
 	}
 
 	c := &Client{
@@ -54,10 +52,10 @@ func NewClient(api, username, password string, dangerMode bool) (*Client, error)
 
 type ApiResponse struct {
 	// The result of the operation: success or error
-	Result string `json:"result"`
+	Result string `json:"result,omitempty"`
 
 	// Error message. Nil if success
-	Message *string `json:"message"`
+	Message *string `json:"message,omitempty"`
 }
 
 func toMap(in any) (map[string]any, error) {
@@ -130,8 +128,12 @@ func (c *Client) call(action string, apiReq, apiRes any) error {
 		return err
 	}
 
-	if errRes.Message != nil {
-		return fmt.Errorf("%s error: %s", action, *errRes.Message)
+	if errRes.Result == "error" {
+		if errRes.Message != nil {
+			return fmt.Errorf("%s error: %s", action, *errRes.Message)
+		} else {
+			return fmt.Errorf("%s error: unknown error", action)
+		}
 	}
 
 	if apiRes != nil {

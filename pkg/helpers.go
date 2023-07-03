@@ -2,27 +2,41 @@ package whmcs
 
 import "time"
 
-type FormattedTime string
+type formattedTime string
 
-func Time(t time.Time) FormattedTime {
-	return FormattedTime(t.Format(time.DateTime))
+func Time(t time.Time) *formattedTime {
+	time := formattedTime(t.Format(time.DateTime))
+	return &time
 }
 
 // Returns parsed time as golang type
-func (t FormattedTime) Parse() time.Time {
-	time, _ := time.Parse(time.DateTime, string(t))
+func (t *formattedTime) Parse() time.Time {
+	time, _ := time.Parse(time.DateTime, string(*t))
 	return time
 }
 
-type Boolean float64
+type boolean int
 
-func Bool(b bool) Boolean {
+func BoolInt(b bool) *boolean {
+	res := boolean(0)
 	if b {
-		return 1
+		res = 1
 	}
-	return 0
+	return &res
 }
 
-func (b Boolean) Bool() bool {
-	return b != 0
+func (b *boolean) Bool() bool {
+	return *b != 0
+}
+
+func Bool(v bool) *bool {
+	return &v
+}
+
+func String(v string) *string {
+	return &v
+}
+
+func Int(v int) *int {
+	return &v
 }

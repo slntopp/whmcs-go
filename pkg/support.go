@@ -142,13 +142,25 @@ func (s *SupportService) DeleteTicketNote(req *DeleteTicketNoteRequest) (*Delete
 	return res, nil
 }
 
+func (s *SupportService) DeleteTicketReply(req *DeleteTicketReplyRequest) (*DeleteTicketReplyResponse, error) {
+	res := &DeleteTicketReplyResponse{}
+	if err := s.wc.call("DeleteTicketReply", req, &res); err != nil {
+		return nil, err
+	}
+
+	return res, nil
+}
+
 func (s *SupportService) GetAnnouncements(req *GetAnnouncementsRequest) (*GetAnnouncementsResponse, error) {
 	raw := make(map[string]any)
 	if err := s.wc.call("GetAnnouncements", req, &raw); err != nil {
 		return nil, err
 	}
 
-	raw["announcements"] = raw["announcements"].(map[string]any)["announcement"]
+	t, ok := raw["announcements"].(map[string]any)
+	if ok {
+		raw["announcements"] = t["announcement"]
+	}
 
 	res, err := toStruct[GetAnnouncementsResponse](raw)
 	if err != nil {
@@ -171,7 +183,7 @@ func (s *SupportService) MergeTicket(req *MergeTicketRequest) (*MergeTicketRespo
 	params["mergeticketids"] = strings.Join(ids, ",")
 
 	res := &MergeTicketResponse{}
-	if err := s.wc.call("MergeTicket", req, &res); err != nil {
+	if err := s.wc.call("MergeTicket", params, &res); err != nil {
 		return nil, err
 	}
 
@@ -226,6 +238,15 @@ func (s *SupportService) UpdateTicket(req *UpdateTicketRequest) (*UpdateTicketRe
 
 	res := &UpdateTicketResponse{}
 	if err := s.wc.call("UpdateTicket", params, &res); err != nil {
+		return nil, err
+	}
+
+	return res, nil
+}
+
+func (s *SupportService) UpdateTicketReply(req *UpdateTicketReplyRequest) (*UpdateTicketReplyResponse, error) {
+	res := &UpdateTicketReplyResponse{}
+	if err := s.wc.call("UpdateTicketReply", req, &res); err != nil {
 		return nil, err
 	}
 

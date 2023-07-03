@@ -21,7 +21,10 @@ func (s *SystemService) GetEmailTemplates(req *GetEmailTemplatesRequest) (*GetEm
 		return nil, err
 	}
 
-	raw["emailtemplates"] = raw["emailtemplates"].(map[string]any)["emailtemplate"]
+	t, ok := raw["emailtemplates"].(map[string]any)
+	if ok {
+		raw["emailtemplates"] = t["emailtemplate"]
+	}
 
 	res, err := toStruct[GetEmailTemplatesResponse](raw)
 	if err != nil {
