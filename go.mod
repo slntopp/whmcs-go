@@ -1,4 +1,4 @@
-module whmcs-go
+module github.com/slntopp/whmcs-go
 
 go 1.20
 
