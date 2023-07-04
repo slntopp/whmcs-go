@@ -19,7 +19,7 @@ func (c *Client) initSupportService() {
 
 func (s *SupportService) AddAnnouncement(req *AddAnnouncementRequest) (*AddAnnouncementResponse, error) {
 	res := &AddAnnouncementResponse{}
-	if err := s.wc.call("AddAnnouncement", req, &res); err != nil {
+	if err := s.wc.Call("AddAnnouncement", req, &res); err != nil {
 		return nil, err
 	}
 
@@ -28,7 +28,7 @@ func (s *SupportService) AddAnnouncement(req *AddAnnouncementRequest) (*AddAnnou
 
 func (s *SupportService) AddCancelRequest(req *AddCancelRequest_Request) (*AddCancelRequest_Response, error) {
 	res := &AddCancelRequest_Response{}
-	if err := s.wc.call("AddCancelRequest", req, &res); err != nil {
+	if err := s.wc.Call("AddCancelRequest", req, &res); err != nil {
 		return nil, err
 	}
 
@@ -37,7 +37,7 @@ func (s *SupportService) AddCancelRequest(req *AddCancelRequest_Request) (*AddCa
 
 func (s *SupportService) AddClientNote(req *AddClientNoteRequest) (*AddClientNoteResponse, error) {
 	res := &AddClientNoteResponse{}
-	if err := s.wc.call("AddClientNote", req, &res); err != nil {
+	if err := s.wc.Call("AddClientNote", req, &res); err != nil {
 		return nil, err
 	}
 
@@ -65,7 +65,7 @@ func (s *SupportService) AddTicketNote(req *AddTicketNoteRequest) (*AddTicketNot
 	params["attachments"] = base64.StdEncoding.EncodeToString(_json)
 
 	res := &AddTicketNoteResponse{}
-	if err := s.wc.call("AddTicketNote", params, &res); err != nil {
+	if err := s.wc.Call("AddTicketNote", params, &res); err != nil {
 		return nil, err
 	}
 
@@ -99,7 +99,7 @@ func (s *SupportService) AddTicketReply(req *AddTicketReplyRequest) (*AddTicketR
 	params["customfields"] = base64.StdEncoding.EncodeToString(bytes)
 
 	res := &AddTicketReplyResponse{}
-	if err := s.wc.call("AddTicketReply", params, &res); err != nil {
+	if err := s.wc.Call("AddTicketReply", params, &res); err != nil {
 		return nil, err
 	}
 
@@ -108,7 +108,7 @@ func (s *SupportService) AddTicketReply(req *AddTicketReplyRequest) (*AddTicketR
 
 func (s *SupportService) BlockTicketSender(req *BlockTicketSenderRequest) (*BlockTicketSenderResponse, error) {
 	res := &BlockTicketSenderResponse{}
-	if err := s.wc.call("BlockTicketSender", req, &res); err != nil {
+	if err := s.wc.Call("BlockTicketSender", req, &res); err != nil {
 		return nil, err
 	}
 
@@ -117,7 +117,7 @@ func (s *SupportService) BlockTicketSender(req *BlockTicketSenderRequest) (*Bloc
 
 func (s *SupportService) DeleteAnnouncement(req *DeleteAnnouncementRequest) (*DeleteAnnouncementResponse, error) {
 	res := &DeleteAnnouncementResponse{}
-	if err := s.wc.call("DeleteAnnouncement", req, &res); err != nil {
+	if err := s.wc.Call("DeleteAnnouncement", req, &res); err != nil {
 		return nil, err
 	}
 
@@ -126,7 +126,7 @@ func (s *SupportService) DeleteAnnouncement(req *DeleteAnnouncementRequest) (*De
 
 func (s *SupportService) DeleteTicket(req *DeleteTicketRequest) (*DeleteTicketResponse, error) {
 	res := &DeleteTicketResponse{}
-	if err := s.wc.call("DeleteTicket", req, &res); err != nil {
+	if err := s.wc.Call("DeleteTicket", req, &res); err != nil {
 		return nil, err
 	}
 
@@ -135,7 +135,7 @@ func (s *SupportService) DeleteTicket(req *DeleteTicketRequest) (*DeleteTicketRe
 
 func (s *SupportService) DeleteTicketNote(req *DeleteTicketNoteRequest) (*DeleteTicketNoteResponse, error) {
 	res := &DeleteTicketNoteResponse{}
-	if err := s.wc.call("DeleteTicketNote", req, &res); err != nil {
+	if err := s.wc.Call("DeleteTicketNote", req, &res); err != nil {
 		return nil, err
 	}
 
@@ -144,7 +144,7 @@ func (s *SupportService) DeleteTicketNote(req *DeleteTicketNoteRequest) (*Delete
 
 func (s *SupportService) DeleteTicketReply(req *DeleteTicketReplyRequest) (*DeleteTicketReplyResponse, error) {
 	res := &DeleteTicketReplyResponse{}
-	if err := s.wc.call("DeleteTicketReply", req, &res); err != nil {
+	if err := s.wc.Call("DeleteTicketReply", req, &res); err != nil {
 		return nil, err
 	}
 
@@ -153,7 +153,7 @@ func (s *SupportService) DeleteTicketReply(req *DeleteTicketReplyRequest) (*Dele
 
 func (s *SupportService) GetAnnouncements(req *GetAnnouncementsRequest) (*GetAnnouncementsResponse, error) {
 	raw := make(map[string]any)
-	if err := s.wc.call("GetAnnouncements", req, &raw); err != nil {
+	if err := s.wc.Call("GetAnnouncements", req, &raw); err != nil {
 		return nil, err
 	}
 
@@ -183,7 +183,7 @@ func (s *SupportService) MergeTicket(req *MergeTicketRequest) (*MergeTicketRespo
 	params["mergeticketids"] = strings.Join(ids, ",")
 
 	res := &MergeTicketResponse{}
-	if err := s.wc.call("MergeTicket", params, &res); err != nil {
+	if err := s.wc.Call("MergeTicket", params, &res); err != nil {
 		return nil, err
 	}
 
@@ -217,7 +217,7 @@ func (s *SupportService) OpenTicket(req *OpenTicketRequest) (*OpenTicketResponse
 	params["customfields"] = base64.StdEncoding.EncodeToString(bytes)
 
 	res := &OpenTicketResponse{}
-	if err := s.wc.call("OpenTicket", params, &res); err != nil {
+	if err := s.wc.Call("OpenTicket", params, &res); err != nil {
 		return nil, err
 	}
 
@@ -237,7 +237,7 @@ func (s *SupportService) UpdateTicket(req *UpdateTicketRequest) (*UpdateTicketRe
 	params["customfields"] = base64.StdEncoding.EncodeToString(bytes)
 
 	res := &UpdateTicketResponse{}
-	if err := s.wc.call("UpdateTicket", params, &res); err != nil {
+	if err := s.wc.Call("UpdateTicket", params, &res); err != nil {
 		return nil, err
 	}
 
@@ -246,7 +246,7 @@ func (s *SupportService) UpdateTicket(req *UpdateTicketRequest) (*UpdateTicketRe
 
 func (s *SupportService) UpdateTicketReply(req *UpdateTicketReplyRequest) (*UpdateTicketReplyResponse, error) {
 	res := &UpdateTicketReplyResponse{}
-	if err := s.wc.call("UpdateTicketReply", req, &res); err != nil {
+	if err := s.wc.Call("UpdateTicketReply", req, &res); err != nil {
 		return nil, err
 	}
 

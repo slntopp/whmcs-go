@@ -10,7 +10,7 @@ func (c *Client) initAuthenticationService() {
 
 func (s *AuthenticationService) ValidateLogin(req *ValidateLoginRequest) (*ValidateLoginResponse, error) {
 	res := &ValidateLoginResponse{}
-	if err := s.wc.call("ValidateLogin", req, &res); err != nil {
+	if err := s.wc.Call("ValidateLogin", req, &res); err != nil {
 		return nil, err
 	}
 

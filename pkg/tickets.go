@@ -14,7 +14,7 @@ func (c *Client) initTicketsService() {
 
 func (s *TicketsService) GetSupportDepartments(req *GetSupportDepartmentsRequest) (*GetSupportDepartmentsResponse, error) {
 	raw := make(map[string]any)
-	if err := s.wc.call("GetSupportDepartments", req, &raw); err != nil {
+	if err := s.wc.Call("GetSupportDepartments", req, &raw); err != nil {
 		return nil, err
 	}
 
@@ -33,7 +33,7 @@ func (s *TicketsService) GetSupportDepartments(req *GetSupportDepartmentsRequest
 
 func (s *TicketsService) GetSupportStatuses(req *GetSupportStatusesRequest) (*GetSupportStatusesResponse, error) {
 	raw := make(map[string]any)
-	if err := s.wc.call("GetSupportStatuses", req, &raw); err != nil {
+	if err := s.wc.Call("GetSupportStatuses", req, &raw); err != nil {
 		return nil, err
 	}
 
@@ -52,7 +52,7 @@ func (s *TicketsService) GetSupportStatuses(req *GetSupportStatusesRequest) (*Ge
 
 func (s *TicketsService) GetTicket(req *GetTicketRequest) (*GetTicketResponse, error) {
 	raw := make(map[string]any)
-	if err := s.wc.call("GetTicket", req, &raw); err != nil {
+	if err := s.wc.Call("GetTicket", req, &raw); err != nil {
 		return nil, err
 	}
 
@@ -64,6 +64,9 @@ func (s *TicketsService) GetTicket(req *GetTicketRequest) (*GetTicketResponse, e
 				v := v.(map[string]any)
 				if v["attachment"] == "" {
 					v["attachments"] = nil
+				}
+				if v["replyid"] == "0" {
+					v["replyid"] = 0
 				}
 			}
 		}
@@ -77,6 +80,9 @@ func (s *TicketsService) GetTicket(req *GetTicketRequest) (*GetTicketResponse, e
 				v := v.(map[string]any)
 				if v["attachment"] == "" {
 					v["attachments"] = nil
+				}
+				if v["noteid"] == "0" {
+					v["noteid"] = 0
 				}
 			}
 		}
@@ -92,7 +98,7 @@ func (s *TicketsService) GetTicket(req *GetTicketRequest) (*GetTicketResponse, e
 
 func (s *TicketsService) GetTicketAttachment(req *GetTicketAttachmentRequest) (*GetTicketAttachmentResponse, error) {
 	raw := make(map[string]any)
-	if err := s.wc.call("GetTicketAttachment", req, &raw); err != nil {
+	if err := s.wc.Call("GetTicketAttachment", req, &raw); err != nil {
 		return nil, err
 	}
 
@@ -112,7 +118,7 @@ func (s *TicketsService) GetTicketAttachment(req *GetTicketAttachmentRequest) (*
 
 func (s *TicketsService) GetTicketCounts(req *GetTicketCountsRequest) (*GetTicketCountsResponse, error) {
 	res := &GetTicketCountsResponse{}
-	if err := s.wc.call("GetTicketCounts", req, &res); err != nil {
+	if err := s.wc.Call("GetTicketCounts", req, &res); err != nil {
 		return nil, err
 	}
 
@@ -121,7 +127,7 @@ func (s *TicketsService) GetTicketCounts(req *GetTicketCountsRequest) (*GetTicke
 
 func (s *TicketsService) GetTicketNotes(req *GetTicketNotesRequest) (*GetTicketNotesResponse, error) {
 	raw := make(map[string]any)
-	if err := s.wc.call("GetTicketNotes", req, &raw); err != nil {
+	if err := s.wc.Call("GetTicketNotes", req, &raw); err != nil {
 		return nil, err
 	}
 
@@ -136,6 +142,9 @@ func (s *TicketsService) GetTicketNotes(req *GetTicketNotesRequest) (*GetTicketN
 				}
 				if v["attachments"] == "" {
 					v["attachments"] = nil
+				}
+				if v["id"] == "0" {
+					v["id"] = 0
 				}
 				nn[i] = v
 			}
@@ -153,7 +162,7 @@ func (s *TicketsService) GetTicketNotes(req *GetTicketNotesRequest) (*GetTicketN
 
 func (s *TicketsService) GetTicketPredefinedCats(req *GetTicketPredefinedCatsRequest) (*GetTicketPredefinedCatsResponse, error) {
 	raw := make(map[string]any)
-	if err := s.wc.call("GetTicketPredefinedCats", req, &raw); err != nil {
+	if err := s.wc.Call("GetTicketPredefinedCats", req, &raw); err != nil {
 		return nil, err
 	}
 
@@ -172,7 +181,7 @@ func (s *TicketsService) GetTicketPredefinedCats(req *GetTicketPredefinedCatsReq
 
 func (s *TicketsService) GetTicketPredefinedReplies(req *GetTicketPredefinedRepliesRequest) (*GetTicketPredefinedRepliesResponse, error) {
 	raw := make(map[string]any)
-	if err := s.wc.call("GetTicketPredefinedReplies", req, &raw); err != nil {
+	if err := s.wc.Call("GetTicketPredefinedReplies", req, &raw); err != nil {
 		return nil, err
 	}
 
@@ -191,7 +200,7 @@ func (s *TicketsService) GetTicketPredefinedReplies(req *GetTicketPredefinedRepl
 
 func (s *TicketsService) GetTickets(req *GetTicketsRequest) (*GetTicketsResponse, error) {
 	raw := make(map[string]any)
-	if err := s.wc.call("GetTickets", req, &raw); err != nil {
+	if err := s.wc.Call("GetTickets", req, &raw); err != nil {
 		return nil, err
 	}
 

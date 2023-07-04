@@ -17,7 +17,7 @@ func (c *Client) initSystemService() {
 
 func (s *SystemService) GetEmailTemplates(req *GetEmailTemplatesRequest) (*GetEmailTemplatesResponse, error) {
 	raw := make(map[string]any)
-	if err := s.wc.call("GetEmailTemplates", req, &raw); err != nil {
+	if err := s.wc.Call("GetEmailTemplates", req, &raw); err != nil {
 		return nil, err
 	}
 
@@ -47,7 +47,7 @@ func (s *SystemService) SendEmail(req *SendEmailRequest) (*SendEmailResponse, er
 	params["customvars"] = base64.StdEncoding.EncodeToString(bytes)
 
 	res := &SendEmailResponse{}
-	if err := s.wc.call("SendEmail", params, &res); err != nil {
+	if err := s.wc.Call("SendEmail", params, &res); err != nil {
 		return nil, err
 	}
 
@@ -67,7 +67,7 @@ func (s *SystemService) SendAdminEmail(req *SendAdminEmailRequest) (*SendAdminEm
 	params["mergefields"] = base64.StdEncoding.EncodeToString(bytes)
 
 	res := &SendAdminEmailResponse{}
-	if err := s.wc.call("SendAdminEmail", params, &res); err != nil {
+	if err := s.wc.Call("SendAdminEmail", params, &res); err != nil {
 		return nil, err
 	}
 
@@ -97,7 +97,7 @@ func (s *SystemService) TriggerNotificationEvent(req *TriggerNotificationEventRe
 	params["attributes"] = attrs
 
 	res := &TriggerNotificationEventResponse{}
-	if err := s.wc.call("TriggerNotificationEvent", params, &res); err != nil {
+	if err := s.wc.Call("TriggerNotificationEvent", params, &res); err != nil {
 		return nil, err
 	}
 

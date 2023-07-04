@@ -77,7 +77,7 @@ type Note struct {
 }
 
 type Reply struct {
-	ReplyId            any                 `json:"replyid"` // number(autocast to float64) or string
+	ReplyId            *int                `json:"replyid"`
 	UserId             *int                `json:"userid"`
 	ContactId          *int                `json:"contactid"`
 	Name               string              `json:"name"`
@@ -318,7 +318,7 @@ type GetTicketPredefinedRepliesRequest struct {
 	CategoryId *int `json:"catid,omitempty"`
 }
 
-type PrdifReply struct {
+type PredefReply struct {
 	Name  *string `json:"name"`
 	Reply *string `json:"reply"`
 }
@@ -330,7 +330,7 @@ type GetTicketPredefinedRepliesResponse struct {
 	Total *int `json:"totalresults"`
 
 	// An array of predefined replies
-	Replies []PrdifReply `json:"predefinedreplies"`
+	Replies []PredefReply `json:"predefinedreplies"`
 }
 
 type TicketStatus string

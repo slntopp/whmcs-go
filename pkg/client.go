@@ -50,14 +50,6 @@ func NewClient(api, username, password string, dangerMode bool) (*Client, error)
 	return c, nil
 }
 
-type ApiResponse struct {
-	// The result of the operation: success or error
-	Result string `json:"result,omitempty"`
-
-	// Error message. Nil if success
-	Message *string `json:"message,omitempty"`
-}
-
 func toMap(in any) (map[string]any, error) {
 	_json, err := json.Marshal(in)
 	if err != nil {
@@ -82,7 +74,18 @@ func toStruct[T any](in map[string]any) (*T, error) {
 	return out, nil
 }
 
-func (c *Client) call(action string, apiReq, apiRes any) error {
+type ApiResponse struct {
+	// The result of the operation: success or error
+	Result string `json:"result,omitempty"`
+
+	// Error message. Nil if success
+	Message *string `json:"message,omitempty"`
+}
+
+// Raw whmcs api call.
+// 
+// Stores the result in the value pointed by apiRes
+func (c *Client) Call(action string, apiReq, apiRes any) error {
 	payload := &bytes.Buffer{}
 	writer := multipart.NewWriter(payload)
 	writer.WriteField("username", c.username)
