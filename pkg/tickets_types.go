@@ -5,7 +5,7 @@ import "encoding/json"
 type GetSupportDepartmentsRequest struct {
 	// Pass as true to not adhere to the departments the API user is a member of.
 	// 	Optional
-	IgnoteDeptAssignment *bool `json:"ignore_dept_assignments,omitempty"`
+	IgnoreDeptAssignment *bool `json:"ignore_dept_assignments,omitempty"`
 }
 
 type Department struct {
@@ -68,30 +68,30 @@ type IndexedAttachment struct {
 
 type Note struct {
 	NoteId             *int                `json:"noteid"`
-	Date               formattedTime       `json:"date"`
-	Message            string              `json:"message"`
-	Attachment         string              `json:"attachment"`
+	Date               *formattedTime      `json:"date"`
+	Message            *string             `json:"message"`
+	Attachment         *string             `json:"attachment"`
 	Attachments        []IndexedAttachment `json:"attachments"`
-	AttachmentsRemoved any                 `json:"attachments_removed"` // number(autocast to float64) or bool
-	Admin              string              `json:"admin"`
+	AttachmentsRemoved any                 `json:"attachments_removed,omitempty"` // number(autocast to float64) or bool
+	Admin              *string             `json:"admin,omitempty"`
 }
 
 type Reply struct {
 	ReplyId            *int                `json:"replyid"`
 	UserId             *int                `json:"userid"`
 	ContactId          *int                `json:"contactid"`
-	Name               string              `json:"name"`
-	Email              string              `json:"email"`
-	RequestorName      string              `json:"requestor_name"`
-	RequestorEmail     string              `json:"requestor_email"`
-	RequestorType      string              `json:"requestor_type"`
-	Date               formattedTime       `json:"date"`
-	Message            string              `json:"message"`
-	Attachment         string              `json:"attachment"`
+	Name               *string             `json:"name"`
+	Email              *string             `json:"email"`
+	RequestorName      *string             `json:"requestor_name"`
+	RequestorEmail     *string             `json:"requestor_email"`
+	RequestorType      *string             `json:"requestor_type"`
+	Date               *formattedTime      `json:"date"`
+	Message            *string             `json:"message"`
+	Attachment         *string             `json:"attachment"`
 	Attachments        []IndexedAttachment `json:"attachments"`
-	AttachmentsRemoved any                 `json:"attachments_removed"` // number(autocast to float64) or bool
-	Admin              string              `json:"admin"`
-	Rating             float64             `json:"rating,omitempty"`
+	AttachmentsRemoved any                 `json:"attachments_removed,omitempty"` // number(autocast to float64) or bool
+	Admin              *string             `json:"admin"`
+	Rating             *int                `json:"rating,omitempty"`
 }
 
 type Ticket struct {
@@ -135,7 +135,7 @@ type Ticket struct {
 	CCEmail *string `json:"cc"`
 
 	// The date the ticket was opened on. Format: Y-m-d H:i:s
-	OpenedDate formattedTime `json:"date"`
+	OpenedDate *formattedTime `json:"date"`
 
 	// The subject of the ticket.
 	Subject *string `json:"subject"`
@@ -150,7 +150,7 @@ type Ticket struct {
 	Admin *string `json:"admin"`
 
 	// The date the ticket was last replied to. Format: Y-m-d H:i:s
-	LastReplyDate formattedTime `json:"lastreply"`
+	LastReplyDate *formattedTime `json:"lastreply"`
 
 	// The ID of the admin user a ticket is flagged to.
 	Flag *int `json:"flag"`
