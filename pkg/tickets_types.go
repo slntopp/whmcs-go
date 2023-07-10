@@ -119,6 +119,8 @@ type Ticket struct {
 	// The ticket submitter’s name.
 	Name *string `json:"name"`
 
+	OwnerName *string `json:"owner_name"`
+
 	// The ticket submitter’s email.
 	Email *string `json:"email"`
 

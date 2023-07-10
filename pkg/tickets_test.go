@@ -309,3 +309,322 @@ func TestTicketsService_GetTicket(t *testing.T) {
 
 	assert.Equal(t, response, result)
 }
+
+func TestTicketsService_GetTicketAttachment(t *testing.T) {
+	request := &GetTicketAttachmentRequest{}
+
+	response := &GetTicketAttachmentResponse{
+		ApiResponse: ApiResponse{
+			Result:  "success",
+			Message: nil,
+		},
+		Filename: String("test.txt"),
+		Data:     []byte("somefiledata"),
+	}
+
+	mockServer := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		err := r.ParseMultipartForm(r.ContentLength)
+		if err != nil {
+			t.Fatal(err)
+		}
+
+		if r.MultipartForm.Value["action"][0] != "GetTicketAttachment" {
+			t.Errorf("Expected action to be 'GetTicketAttachment', got '%s'", r.FormValue("action"))
+		}
+
+		_json := []byte(`{
+			"result": "success",
+			"filename": "test.txt",
+			"data": "c29tZWZpbGVkYXRh"
+		}`)
+
+		_, _ = w.Write(_json)
+	}))
+	defer mockServer.Close()
+
+	client, err := NewClient(mockServer.URL, "username", "password", false)
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	result, err := client.Tickets.GetTicketAttachment(request)
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	assert.Equal(t, response, result)
+}
+
+func TestTicketsService_GetTicketNotes(t *testing.T) {
+	request := &GetTicketNotesRequest{}
+
+	response := &GetTicketNotesResponse{
+		ApiResponse: ApiResponse{
+			Result:  "success",
+			Message: nil,
+		},
+		Total: Int(1),
+		Notes: []Note{
+			{
+				NoteId:             Int(1),
+				Date:               Time(time.Date(2023, time.July, 5, 10, 0, 0, 0, time.UTC)),
+				Message:            String("Test note"),
+				Attachment:         String(""),
+				Attachments:        []IndexedAttachment{},
+				AttachmentsRemoved: nil,
+				Admin:              String("admin"),
+			},
+		},
+	}
+
+	mockServer := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		err := r.ParseMultipartForm(r.ContentLength)
+		if err != nil {
+			t.Fatal(err)
+		}
+
+		if r.MultipartForm.Value["action"][0] != "GetTicketNotes" {
+			t.Errorf("Expected action to be 'GetTicketNotes', got '%s'", r.FormValue("action"))
+		}
+
+		_json := []byte(`{
+			"result": "success",
+			"totalresults": 1,
+			"notes": {
+				"note": [
+					{
+						"noteid": 1,
+						"date": "2023-07-05 10:00:00",
+						"message": "Test note",
+						"attachment": "",
+						"attachments": [],
+						"attachments_removed": null,
+						"admin": "admin"
+					}
+				]
+			}
+		}`)
+
+		_, _ = w.Write(_json)
+	}))
+	defer mockServer.Close()
+
+	client, err := NewClient(mockServer.URL, "username", "password", false)
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	result, err := client.Tickets.GetTicketNotes(request)
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	assert.Equal(t, response, result)
+}
+
+func TestTicketsService_GetTicketPredefinedCats(t *testing.T) {
+	request := &GetTicketPredefinedCatsRequest{}
+
+	response := &GetTicketPredefinedCatsResponse{
+		ApiResponse: ApiResponse{
+			Result:  "success",
+			Message: nil,
+		},
+		Total: Int(1),
+		Categories: []Category{
+			{
+				Id:         Int(1),
+				ParentId:   Int(0),
+				Name:       String("General"),
+				ReplyCount: Int(10),
+			},
+		},
+	}
+
+	mockServer := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		err := r.ParseMultipartForm(r.ContentLength)
+		if err != nil {
+			t.Fatal(err)
+		}
+
+		if r.MultipartForm.Value["action"][0] != "GetTicketPredefinedCats" {
+			t.Errorf("Expected action to be 'GetTicketPredefinedCats', got '%s'", r.FormValue("action"))
+		}
+
+		_json := []byte(`{
+			"result": "success",
+			"totalresults": 1,
+			"categories": {
+				"category": [
+					{
+						"id": 1,
+						"parentid": 0,
+						"name": "General",
+						"replycount": 10
+					}
+				]
+			}
+		}`)
+
+		_, _ = w.Write(_json)
+	}))
+	defer mockServer.Close()
+
+	client, err := NewClient(mockServer.URL, "username", "password", false)
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	result, err := client.Tickets.GetTicketPredefinedCats(request)
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	assert.Equal(t, response, result)
+}
+
+func TestTicketsService_GetTicketPredefinedReplies(t *testing.T) {
+	request := &GetTicketPredefinedRepliesRequest{}
+
+	response := &GetTicketPredefinedRepliesResponse{
+		ApiResponse: ApiResponse{
+			Result:  "success",
+			Message: nil,
+		},
+		Total: Int(1),
+		Replies: []PredefReply{
+			{
+				Name:  String("Reply 1"),
+				Reply: String("This is a predefined reply."),
+			},
+		},
+	}
+
+	mockServer := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		err := r.ParseMultipartForm(r.ContentLength)
+		if err != nil {
+			t.Fatal(err)
+		}
+
+		if r.MultipartForm.Value["action"][0] != "GetTicketPredefinedReplies" {
+			t.Errorf("Expected action to be 'GetTicketPredefinedReplies', got '%s'", r.FormValue("action"))
+		}
+
+		_json := []byte(`{
+			"result": "success",
+			"totalresults": 1,
+			"predefinedreplies": {
+				"predefinedreply": [
+					{
+						"name": "Reply 1",
+						"reply": "This is a predefined reply."
+					}
+				]
+			}
+		}`)
+
+		_, _ = w.Write(_json)
+	}))
+	defer mockServer.Close()
+
+	client, err := NewClient(mockServer.URL, "username", "password", false)
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	result, err := client.Tickets.GetTicketPredefinedReplies(request)
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	assert.Equal(t, response, result)
+}
+
+func TestTicketsService_GetTickets(t *testing.T) {
+	request := &GetTicketsRequest{}
+
+	response := &GetTicketsResponse{
+		ApiResponse: ApiResponse{
+			Result:  "success",
+			Message: nil,
+		},
+		Total:       Int(1),
+		StartNumber: Int(0),
+		NumrRturned: Int(1),
+		Tickets: []Ticket{
+			{
+				Id:         Int(1),
+				DeptId:     Int(1),
+				Name:       String("Cynthia Reilly"),
+				OwnerName:  String("Cynthia Reilly"),
+				OpenedDate: Time(time.Date(2016, time.January, 1, 6, 26, 29, 0, time.UTC)),
+				Subject:    String("This is a sample ticket"),
+				Attachment: String("123456_attachment_name.png"),
+				Attachments: []IndexedAttachment{
+					{
+						Filename: String("attachment_name.png"),
+						Index:    Int(0),
+					},
+				},
+				AttachmentsRemoved: Bool(true),
+				Flag:               Int(0),
+				Service:            String(""),
+			},
+		},
+	}
+
+	mockServer := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		err := r.ParseMultipartForm(r.ContentLength)
+		if err != nil {
+			t.Fatal(err)
+		}
+
+		if r.MultipartForm.Value["action"][0] != "GetTickets" {
+			t.Errorf("Expected action to be 'GetTickets', got '%s'", r.FormValue("action"))
+		}
+
+		_json := []byte(`{
+			"result": "success",
+			"totalresults": 1,
+			"startnumber": 0,
+			"numreturned": 1,
+			"tickets": {
+				"ticket": [
+					{
+						"id": 1,
+						"deptid": 1,
+						"name": "Cynthia Reilly",
+						"owner_name": "Cynthia Reilly",
+						"date": "2016-01-01 06:26:29",
+						"subject": "This is a sample ticket",
+						"attachment": "123456_attachment_name.png",
+						"attachments": [
+							{
+								"filename": "attachment_name.png",
+								"index": 0
+							}
+						],
+						"attachments_removed": true,
+						"flag": 0,
+						"service": ""
+					}
+				]
+			}
+		}`)
+
+		_, _ = w.Write(_json)
+	}))
+	defer mockServer.Close()
+
+	client, err := NewClient(mockServer.URL, "username", "password", false)
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	result, err := client.Tickets.GetTickets(request)
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	assert.Equal(t, response, result)
+}

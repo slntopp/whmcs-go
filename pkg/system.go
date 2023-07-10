@@ -88,7 +88,7 @@ func (s *SystemService) TriggerNotificationEvent(req *TriggerNotificationEventRe
 		}
 		for k, v := range a.AdditionalAttributes {
 			if k == "label" || k == "value" {
-				return nil, fmt.Errorf("additional attribute with key 'label' or 'value' not allowed")
+				return nil, fmt.Errorf("additional attribute with 'label' key or 'value' key not allowed")
 			}
 			attr[k] = v
 		}

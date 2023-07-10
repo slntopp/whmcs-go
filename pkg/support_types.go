@@ -254,18 +254,20 @@ type Announcement struct {
 
 	AnnouncementText *string `json:"announcement"`
 
-	Date formattedTime `json:"date"`
+	Date *formattedTime `json:"date"`
 
 	Published *boolean `json:"published"`
 
 	Language *string `json:"language"`
 
-	CreatedAt formattedTime `json:"created_at"`
+	CreatedAt *formattedTime `json:"created_at"`
 
-	UpdatedAt formattedTime `json:"updated_at"`
+	UpdatedAt *formattedTime `json:"updated_at"`
 }
 
 type GetAnnouncementsResponse struct {
+	ApiResponse
+
 	// The total number of results available
 	Total *int `json:"totalresults"`
 
@@ -342,7 +344,7 @@ type OpenTicketRequest struct {
 
 	// The priority of the ticket ('Low', 'Medium', 'High')
 	// 	Optional
-	Priority*TicketPriority `json:"priority,omitempty"`
+	Priority *TicketPriority `json:"priority,omitempty"`
 
 	// The date and time the ticket message will show as sent. Format: ISO8601 or YYYY-MM-DD HH:mm:ss
 	// 	Optional
